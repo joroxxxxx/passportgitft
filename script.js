@@ -1,31 +1,47 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Create floating particles
   createParticles();
+
+  // Select all the necessary elements
   const passportView = document.getElementById('passport-view');
   const ticketView = document.getElementById('ticket-view');
   const passportContainer = document.querySelector('.passport-container');
   const backButton = document.querySelector('.back-button');
-  
-  // Add click event to passport to show ticket
+
+  // Select the audio element you added to the HTML
+  const backgroundMusic = document.getElementById('background-music');
+
+  // Add click event to passport to show ticket and play music
   passportContainer.addEventListener('click', function() {
     // Animate passport out
     passportView.classList.remove('active');
     passportView.classList.add('slide-out');
     
-    // Delay ticket view appearance for smooth transition
+    // Play the music
+    if (backgroundMusic) {
+      backgroundMusic.play();
+    }
+    
+    // Delay ticket view appearance for a smooth transition
     setTimeout(() => {
       ticketView.classList.add('active');
       ticketView.classList.add('slide-in');
     }, 300);
   });
   
-  // Add click event to back button to return to passport
+  // Add click event to back button to return to passport and stop the music
   backButton.addEventListener('click', function() {
     // Animate ticket out
     ticketView.classList.remove('active');
     ticketView.classList.remove('slide-in');
     
-    // Delay passport view appearance for smooth transition
+    // Pause the music and reset it to the beginning
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+    }
+    
+    // Delay passport view appearance for a smooth transition
     setTimeout(() => {
       passportView.classList.add('active');
       passportView.classList.remove('slide-out');
